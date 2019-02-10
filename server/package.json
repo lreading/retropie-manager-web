@@ -1,0 +1,28 @@
+{
+    "name": "retropie-manager-web-server",
+    "version": "1.0.0",
+    "description": "Server app for the retropie manager web application",
+    "main": "index.js",
+    "scripts": {
+        "eslint": "eslint",
+        "apidoc": "apidoc",
+        "lint": "eslint . --fix",
+        "test": "mocha test --recursive",
+        "start": "node src/index.js",
+        "docs": "apidoc -i ./src -o ./doc"
+    },
+    "author": "Leo Reading",
+    "license": "MIT",
+    "devDependencies": {
+        "apidoc": "^0.17.7",
+        "chai": "^4.2.0",
+        "eslint": "^5.13.0",
+        "mocha": "^5.2.0",
+        "sinon": "^7.2.3",
+        "sinon-chai": "^3.3.0"
+    },
+    "dependencies": {
+        "express": "^4.16.4",
+        "winston": "^2.4.4"
+    }
+}
