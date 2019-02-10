@@ -6,7 +6,7 @@ const logLib = require('../../src/service/logger.js');
 describe('logger', function () {
 
     beforeEach(function () {
-        this.logger = logLib('test');
+        this.logger = logLib.get('test');
         this.winston = {
             silly: this.sandbox.stub(winston, 'silly'),
             debug: this.sandbox.stub(winston, 'debug'),

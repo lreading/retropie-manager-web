@@ -9,6 +9,7 @@
         "lint": "eslint . --fix",
         "test": "mocha test --recursive",
         "start": "node src/index.js",
+        "dev": "./start.sh -e dev.env",
         "docs": "apidoc -i ./src -o ./doc"
     },
     "author": "Leo Reading",
@@ -23,6 +24,7 @@
     },
     "dependencies": {
         "express": "^4.16.4",
+        "pg": "^7.8.0",
         "winston": "^2.4.4"
     }
 }

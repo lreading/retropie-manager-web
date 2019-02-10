@@ -3,6 +3,7 @@
  * @description Logging abstraction
  */
 const winston = require('winston');
+const path = require('path');
 
 /**
  * Gets a message to use in the log
@@ -82,6 +83,33 @@ Logger.prototype.info = info;
 Logger.prototype.warn = warn;
 Logger.prototype.error = error;
 
-module.exports = function (namespace) {
-    return new Logger(namespace);
+/**
+ * Initializes the logging functionality
+ */
+const init = () => {
+    const upDir = `..${path.sep}`;
+
+    const logLevel = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : 'debug';
+
+    winston.level = logLevel;
+    winston.add(winston.transports.File, { filename: path.join(__dirname, upDir, upDir, 'retropie-manager-web-server.log'), maxzie: 2097152 });
+    winston.addColors({
+        debug: 'blue',
+        info: 'green',
+        warn: 'yellow',
+        error: 'red'
+    });
+    winston.remove(winston.transports.Console);
+    winston.add(winston.transports.Console, {
+        level: logLevel,
+        prettyPrint: true,
+        colorize: true,
+        silent: false,
+        timestamp: true
+    });
+};
+
+module.exports = {
+    get: (namespace) => new Logger(namespace),
+    init
 };
