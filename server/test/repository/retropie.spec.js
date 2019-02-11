@@ -3,12 +3,6 @@ const expect = require('chai').expect;
 const repo = require('../../src/repository/retropie.js');
 
 describe('retropie repo', () => {
-    let repo;
-
-    beforeEach(() => {
-        repo = retropieRepo.get();
-    });
-
     it('is a repo for the RetroPie table', () => {
         expect(repo.table).to.eql('RetroPie');
     });
