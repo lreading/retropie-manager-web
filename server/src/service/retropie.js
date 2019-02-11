@@ -98,8 +98,6 @@ const add = async (body) => {
     body.created_on = moment();
     body.private_key = await crypto.encrypt(body.private_key);
 
-    console.log('Length of key: ', body.private_key.length);
-
     const pi = await repo.add(body);
     repoCache.put(pi.id, pi, TTL);
     logger.debug(`Added new RetroPi ${pi.id}`);
