@@ -1,6 +1,8 @@
 #!/bin/bash
 
 CONTAINER_NAME="retropie-manager-web-database"
+IMAGE_NAME=$CONTAINER_NAME
+TAG=latest
 
 help() {
     echo 'start.sh - Starts the Postgres DB for Retropie Manager Web'
@@ -47,9 +49,11 @@ if [ $RUNNING_CONTAINERS -ne 0 ]; then
     exit 0
 fi
 
+docker build -t $IMAGE_NAME:$TAG .
+
 docker run \
     --name $CONTAINER_NAME \
     --env-file $ENV_FILE \
     -p 5432:5432 \
     -d \
-    postgres
+    $IMAGE_NAME:$TAG

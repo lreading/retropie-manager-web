@@ -19,7 +19,7 @@ const Repository = function (table) {
  * @returns {object | null}
  */
 const get = async function (id) {
-    const results = await pool.get().query('SELECT * FROM $1 WHERE Id = $2', [this.table, id]);
+    const results = await pool.get().query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
     if (results && results.rows && results.rows.length) {
         return results.rows[0];
     }
@@ -31,7 +31,7 @@ const get = async function (id) {
  * @returns {Array}
  */
 const getAll = async function () {
-    const results = await pool.get().query('SELECT * FROM $1', [this.table]);
+    const results = await pool.get().query(`SELECT * FROM ${this.table}`);
     return results && results.rows ? results.rows : [];
 };
 
@@ -46,12 +46,12 @@ const add = async function (record) {
         delete record.id;
     }
     Object.keys(record).forEach((key, idx) => params.push({
-        param: `$${idx + 2}`,
+        param: `$${idx + 1}`,
         key
     }));
-    const sql = `INSERT INTO $1(${params.map(p => p.key).join(', ')}) ` +
-        `VALUES(${params.map(p => p.param).join(', ')}) RETURNING id`;
-    const result = await pool.get().query(sql, [this.table].concat(Object.values(record)));
+    const sql = `INSERT INTO ${this.table}(id, ${params.map(p => p.key).join(', ')}) ` +
+        `VALUES(DEFAULT, ${params.map(p => p.param).join(', ')}) RETURNING id`;
+    const result = await pool.get().query(sql, Object.values(record));
     // TODO: test to see how this works.
     // console.log(result);
     if (result && result.rows) {
@@ -72,7 +72,7 @@ const update = async function (record) {
     const params = Object.keys(record)
         .filter((p) => p.toLowerCase() !== 'id')
         .map((key, idx) => ({
-            param: `$${idx + 3}`,
+            param: `$${idx + 2}`,
             key,
             value: record[key]
         }));
@@ -81,10 +81,10 @@ const update = async function (record) {
         .filter((p) => p.key.toLowerCase() !== 'id')
         .map((p) => `${p.key}=${p.param}`);
 
-    const sql = `UPDATE $1 SET ${valArr.join(', ')} WHERE ID = $2`;
+    const sql = `UPDATE ${this.table} SET ${valArr.join(', ')} WHERE ID = $1`;
 
     await pool.get().query(sql,
-        [this.table, record.id].concat(params.map((p) => p.value)));
+        [record.id].concat(params.map((p) => p.value)));
 };
 
 /**
@@ -92,7 +92,7 @@ const update = async function (record) {
  * @param {number} id
  */
 const del = async function (id) {
-    await pool.get().query('DELETE FROM $1 WHERE ID = $2', [this.table, id]);
+    await pool.get().query(`DELETE FROM ${this.table} WHERE ID = $1`, [id]);
 };
 
 Repository.prototype.get = get;

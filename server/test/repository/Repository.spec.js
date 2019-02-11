@@ -31,29 +31,29 @@ describe('repository', () => {
     it('gets a record', async () => {
         await repo.get(record.id);
         expect(stub).to.have.been
-            .calledWith('SELECT * FROM $1 WHERE Id = $2', [tableName, 5]);
+            .calledWith(`SELECT * FROM ${tableName} WHERE id = $1`, [5]);
     });
 
     it('gets all records', async () => {
         const results = await repo.getAll();
         expect(stub).to.have.been
-            .calledWith('SELECT * FROM $1', [tableName]);
+            .calledWith(`SELECT * FROM ${tableName}`);
         expect(Array.isArray(results)).to.be.true;
     });
 
     it('adds a new record', async () => {
         delete record.id;
         await repo.add(record);
-        const expectedSql = 'INSERT INTO $1(foo, num) VALUES($2, $3) RETURNING id';
+        const expectedSql = `INSERT INTO ${tableName}(id, foo, num) VALUES(DEFAULT, $1, $2) RETURNING id`;
         expect(stub).to.have.been
-            .calledWith(expectedSql, [tableName, record.foo, record.num]);
+            .calledWith(expectedSql, [record.foo, record.num]);
     });
 
     it('updates a record', async () => {
         await repo.update(record);
-        const expectedSql = 'UPDATE $1 SET foo=$3, num=$4 WHERE ID = $2';
+        const expectedSql = `UPDATE ${tableName} SET foo=$2, num=$3 WHERE ID = $1`;
         expect(stub).to.have.been
-            .calledWith(expectedSql, [tableName, record.id, record.foo, record.num]);
+            .calledWith(expectedSql, [record.id, record.foo, record.num]);
     });
 
     it('throws an error updating if no id is defined', async () => {
@@ -68,8 +68,8 @@ describe('repository', () => {
 
     it('deletes a record', async () => {
         await repo.del(record.id);
-        const expectedSql = 'DELETE FROM $1 WHERE ID = $2';
+        const expectedSql = `DELETE FROM ${tableName} WHERE ID = $1`;
         expect(stub).to.have.been
-            .calledWith(expectedSql, [tableName, record.id]);
+            .calledWith(expectedSql, [record.id]);
     });
 });
