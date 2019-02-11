@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const retropieRepo = require('../../src/repository/retropie.js');
+const repo = require('../../src/repository/retropie.js');
 
 describe('retropie repo', () => {
     let repo;

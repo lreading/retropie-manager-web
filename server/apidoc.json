@@ -1,7 +1,7 @@
 {
     "name": "Retropie Manager Web",
     "version": "0.0.1",
-    "description": "Web manage for Retropie",
+    "description": "Web manager for Retropie",
     "title": "Retropie Manager Web",
     "url": "http://localhost:11003"
 }

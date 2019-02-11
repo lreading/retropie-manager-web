@@ -47,4 +47,5 @@ PGHOST=localhost \
     PGPASSWORD=$POSTGRES_PASSWORD \
     CRYPTO_KEY=$CRYPTO_KEY \
     PGPORT=5432 \
+    PORT=$PORT \
     npm run start

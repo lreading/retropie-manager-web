@@ -6,7 +6,7 @@
     "scripts": {
         "eslint": "eslint",
         "apidoc": "apidoc",
-        "lint": "eslint . --fix",
+        "lint": "eslint ./src --fix",
         "test": "mocha test --recursive",
         "start": "node src/index.js",
         "dev": "./start.sh -e dev.env",
@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "express": "^4.16.4",
+        "moment": "^2.24.0",
         "pg": "^7.8.0",
         "winston": "^2.4.4"
     }

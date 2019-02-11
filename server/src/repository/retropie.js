@@ -6,6 +6,4 @@ const Repository = require('./repository.js');
 
 const repo = Repository.new('RetroPie');
 
-module.exports = {
-    get: () => repo
-};
+module.exports = repo;

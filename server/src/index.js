@@ -2,36 +2,39 @@
  * @name index
  * @description entry point for the server app
  */
-//const express = require('express');
+const express = require('express');
+const path = require('path');
 
-const logger = require('./service/logger.js');
+const logLib = require('./service/logger.js');
+const api = require('./routes/api.js');
 
+/**
+ * Commands to execute prior to starting the server
+ */
 const preStart = () => {
-    logger.init();
+    logLib.init();
 };
 
-preStart();
+/**
+ * Starts the server
+ */
+const start = () => {
+    preStart();
+    const logger = logLib.get('index.js');
 
-const test = async () => {
-    const fs = require('fs');
-    const crypto = require('./service/crypto.js');
-    const io = require('./interop/io.js');
+    const app = express();
+    app.use(express.json());
 
+    app.use('/docs', express.static(path.join(__dirname, `..${path.sep}`, 'doc')));
+    app.use(api.addRoutes());
 
-    const key = fs.readFileSync('/home/leo/.ssh/retropie_rsa');
-    const encrypted = await crypto.encrypt(key);
+    app.get('/', (req, res) => {
+        res.json({ status: 200, message: 'hey there' });
+    });
 
-    const pi = {
-        id: 1,
-        name: 'Leo\'s RetroPie',
-        created_on: new Date(),
-        private_key: encrypted,
-        username: 'pi',
-        host: 'retropie.local'
-    };
-
-    const systems = await io.getSystemList(pi);
-    console.log(systems);
+    app.listen(process.env.PORT, () => {
+        logger.info(`Server started on http://localhost:${process.env.PORT}`);
+    });
 };
 
-test().then(() => console.log('Done!'));
+start();
