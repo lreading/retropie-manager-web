@@ -99,7 +99,7 @@ const add = async (body) => {
     body.private_key = await crypto.encrypt(body.private_key);
 
     const pi = await repo.add(body);
-    repoCache.put(pi.id, pi, TTL);
+    await get(pi.id);
     logger.debug(`Added new RetroPi ${pi.id}`);
 };
 

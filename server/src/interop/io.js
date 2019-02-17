@@ -14,7 +14,10 @@ const crypto = require('../service/crypto.js');
 const getSystemList = async (retropie) => {
     try {
         const privateKey = await crypto.decrypt(retropie.private_key);
-        const command = `echo "${privateKey}" | ssh -i /dev/stdin ${retropie.username}@${retropie.host} "ls ~/RetroPie/roms"`;
+        let command = `PRIVATEKEY="${privateKey}"; `;
+        command += `USERNAME="${retropie.username}"; `;
+        command += `HOST="${retropie.host}"; `;
+        command += `echo "$PRIVATEKEY" | ssh -i /dev/stdin "$USERNAME"@"$HOST" "ls ~/RetroPie/roms"`;
         const resText = await cmd.execAsync(command);
         const folders = resText.split('\n');
         return folders.filter(x => x) || [];

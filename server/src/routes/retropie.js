@@ -76,7 +76,7 @@ const get = async (req, res) => {
  * @apiParam {string} name (Body) - What you want to name this RetroPie, eg Bedroom RetroPie
  * @apiParam {string} username (Body) - The username on the pi associated with the SSH key.  Typically "pi"
  * @apiParam {string} host (Body) - The host (can be ip or host, eg 192.168.1.12 or retropie.local)
- * @apiParam {string} ssh_key (Body) - The private key that allows interop between this app and the RetroPie
+ * @apiParam {string} private_key (Body) - The private key that allows interop between this app and the RetroPie
  * @apiSuccess {number} id
  * @apiSuccess {string} name
  * @apiSuccess {date} created_on
