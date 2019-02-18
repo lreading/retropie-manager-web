@@ -3,7 +3,7 @@
 A web-based manager for retropie.
 
 # Security Warning
-This app will interface directly with your retropie.  It does not come with authentication/authorization, and there is no guarantee regarding the security of this application.  You will copy files directly to the pi, and some inputs may be used in bash commands.
+This app will interface directly with your retropie.  It does not come with authentication/authorization, and there is no guarantee regarding the security of this application.  You will copy files directly to the pi, and some inputs may be used in bash commands.  YOU SHOULD ONLY RUN THIS ON A PRIVATE NETWORK WITH PEOPLE YOU TRUST.
 
 
 # Running Locally / Developing
