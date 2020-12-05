@@ -10,6 +10,8 @@ This app will interface directly with your retropie.  It does not come with auth
 - database/start.sh -e dev.env
 - cd server && npm run dev
 
+Theme for FE: 
+https://blackrockdigital.github.io/startbootstrap-small-business/
 
 TODO:
 - Set up documentation for what needs to be done on the retropie (get ssh key)
